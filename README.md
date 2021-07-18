@@ -10,7 +10,7 @@ React, TypeScript를 이용한 최신, 인기, 공개 예정인 영화와 TV프�
 
 링크 : https://dev-donghyuk.github.io/dongflix
 
-### 👌 영화 페이지
+### 😎 영화 페이지
 
 ![1](https://user-images.githubusercontent.com/60591071/113411600-2f021880-93f1-11eb-8fe7-c972dbfa8b47.png)
 
@@ -18,7 +18,7 @@ React, TypeScript를 이용한 최신, 인기, 공개 예정인 영화와 TV프�
 
 - 중복되는 css가 많아 컴포넌트로 만들어서 효율적으로 영화페이지를 구현했습니다.
 
-### 👌 애니메이션 페이지
+### 😎 애니메이션 페이지
 
 ![3](https://user-images.githubusercontent.com/60591071/113411604-30cbdc00-93f1-11eb-810f-de4b641ccee3.png)
 
@@ -26,7 +26,7 @@ React, TypeScript를 이용한 최신, 인기, 공개 예정인 영화와 TV프�
 
 - 중복되는 css가 많아 하나의 컴포넌트로 만들어서 효율적으로 애니메이션 페이지를 구현했습니다.
 
-### 👌 상세 페이지
+### 😎 상세 페이지
 
 ![5](https://user-images.githubusercontent.com/60591071/113411607-31fd0900-93f1-11eb-9f98-26119646f3c0.png)
 
