@@ -5,7 +5,7 @@
 React, Typescript, Redux-Saga를 이용하여 최신, 인기, 공개 예정인 영화와 TV프로그램의 포스터, 별점, 영화 정보, 검색기능, 영화 페이지 링크, 유튜브 영화 예고편까지
 한 눈에 볼 수 있게 만든 반응형 영화 웹 페이지입니다.
 
-사용언어 : React, Typescript, Redux, Redux-saga, Styled Components, Material UI
+사용언어 : React, Typescript, Redux, Redux-Saga, Styled Components, Material UI
 
 ## ✔ 주요 기능
 
