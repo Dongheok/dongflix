@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/dongflix/static/css/main.00b81223.chunk.css",
-    "main.js": "/dongflix/static/js/main.b67d4db8.chunk.js",
-    "main.js.map": "/dongflix/static/js/main.b67d4db8.chunk.js.map",
+    "main.js": "/dongflix/static/js/main.abc5d7b7.chunk.js",
+    "main.js.map": "/dongflix/static/js/main.abc5d7b7.chunk.js.map",
     "runtime-main.js": "/dongflix/static/js/runtime-main.de6dcc91.js",
     "runtime-main.js.map": "/dongflix/static/js/runtime-main.de6dcc91.js.map",
     "static/js/2.d49a7cab.chunk.js": "/dongflix/static/js/2.d49a7cab.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.de6dcc91.js",
     "static/js/2.d49a7cab.chunk.js",
     "static/css/main.00b81223.chunk.css",
-    "static/js/main.b67d4db8.chunk.js"
+    "static/js/main.abc5d7b7.chunk.js"
   ]
 }
