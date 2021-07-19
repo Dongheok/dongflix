@@ -57,6 +57,7 @@ const Search: React.FC = () => {
         if (prevSearchTerm && prevSearchTerm !== `""`) {
             searchFunction(prevSearchTerm);
         }
+        console.log(errorMessage);
     }, []);
 
     return (
@@ -104,7 +105,9 @@ const Search: React.FC = () => {
                     </Section>
                 )}
                 {/*  */}
-                {searchContentData.movie && searchContentData.tv && searchContentData.movie.length === 0 && searchContentData.tv.length === 0 && <Message text={`Not Found "${errorMessage}"`} />}
+                {searchContentData.movie && searchContentData.tv && searchContentData.movie.length === 0 && searchContentData.tv.length === 0 && errorMessage !== '' && (
+                    <Message text={`Not Found "${errorMessage}"`} />
+                )}
                 {/*  */}
             </PosterWrap>
         </Wrapper>
