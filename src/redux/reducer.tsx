@@ -1,11 +1,11 @@
 // 전역 state 값 타입정의
 type ReducerType = {
-   isLoading: boolean;
+    isLoading: boolean;
 };
 
 // 전역 state 값 초기값 설정
 const reducer: ReducerType = {
-   isLoading: false,
+    isLoading: false,
 };
 
 // 액션 type 선언
@@ -14,21 +14,21 @@ const SET_IS_LOADING = 'SET_IS_LOADING' as const;
 
 // 액션 생성 함수 선언
 export const setIsLoading = (isLoading: boolean) => ({
-   type: SET_IS_LOADING,
-   payload: isLoading,
+    type: SET_IS_LOADING,
+    payload: isLoading,
 });
 
 // 액션 객체들을 위한 타입 정의
 type ActionType = ReturnType<typeof setIsLoading>;
 
-const action = (state: ReducerType = reducer, action: ActionType) => {
-   switch (action.type) {
-      case 'SET_IS_LOADING':
-         return { ...state, isLoading: action.payload };
+const rootReducer = (state: ReducerType = reducer, action: ActionType) => {
+    switch (action.type) {
+        case 'SET_IS_LOADING':
+            return { ...state, isLoading: action.payload };
 
-      default:
-         return state;
-   }
+        default:
+            return state;
+    }
 };
 
-export default action;
+export default rootReducer;

@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from 'redux';
 
-import reducer from './reducer';
+import rootReducer from './reducer';
 
 const appReducer = combineReducers({
-   reducer,
+    root: rootReducer,
 });
 
 export const store = createStore(appReducer);

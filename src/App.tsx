@@ -8,13 +8,13 @@ import LoadingBar from 'components/loading-bar';
 import Routes from './Routes';
 
 const App: React.FC = () => {
-   const reducer = useSelector((state: RootState) => state.reducer);
-   return (
-      <ThemeProvider theme={theme}>
-         {reducer.isLoading && <LoadingBar />}
-         <Routes />
-      </ThemeProvider>
-   );
+    const { isLoading } = useSelector((state: RootState) => state.root);
+    return (
+        <ThemeProvider theme={theme}>
+            {isLoading && <LoadingBar />}
+            <Routes />
+        </ThemeProvider>
+    );
 };
 
 export default App;

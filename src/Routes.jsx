@@ -1,31 +1,29 @@
-import React from "react";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 // layout
-import Layout from "./layout";
 
 // pages
-import Movie from "pages/movie";
-import Tv from "pages/tv";
-import Search from "pages/search";
-import Detail from "pages/detail";
+import Movie from 'pages/movie';
+import Tv from 'pages/tv';
+import Search from 'pages/search';
+import Detail from 'pages/detail';
+import Layout from './layout';
 
-const Routes = () => {
-  return (
+const Routes = () => (
     <BrowserRouter basename="/dongflix">
-      <Layout>
-        <Switch>
-          <Route path="/" exact component={Movie} />
-          <Route path="/movie" exact component={Movie} />
-          <Route path="/tv" exact component={Tv} />
-          <Route path="/search" component={Search} />
-          <Route path="/movie/detail/:id" component={Detail} />
-          <Route path="/tv/detail/:id" component={Detail} />
+        <Layout>
+            <Switch>
+                <Route path="/" exact component={Movie} />
+                <Route path="/movie" exact component={Movie} />
+                <Route path="/tv" exact component={Tv} />
+                <Route path="/search" component={Search} />
+                <Route path="/movie/detail/:id" component={Detail} />
+                <Route path="/tv/detail/:id" component={Detail} />
 
-          <Redirect from="*" to="/" />
-        </Switch>
-      </Layout>
+                <Redirect from="*" to="/" />
+            </Switch>
+        </Layout>
     </BrowserRouter>
-  );
-};
+);
 export default Routes;

@@ -5,16 +5,14 @@ import Header from './header';
 import Wrapper from './styles';
 
 type LayoutType = {
-   children: React.ReactNode;
+    children: React.ReactNode;
 };
 
-const Layout: React.FC<LayoutType> = ({ children }) => {
-   return (
-      <Wrapper>
-         <Header />
-         <Grid className="content">{children}</Grid>
-      </Wrapper>
-   );
-};
+const Layout: React.FC<LayoutType> = ({ children }) => (
+    <Wrapper>
+        <Header />
+        <Grid className="content">{children}</Grid>
+    </Wrapper>
+);
 
 export default Layout;
