@@ -1,52 +1,8 @@
 import axios from 'axios';
-import { store } from 'redux/redux';
 
 const api = axios.create({
     baseURL: 'https://api.themoviedb.org/3/',
 });
-
-api.interceptors.request.use(
-    (config) => {
-        // 요청 바로 직전
-        store.dispatch({
-            type: 'SET_IS_LOADING',
-            payload: true,
-        });
-        const temp = config;
-        temp.params = temp.params || {};
-        temp.params.api_key = '4e88b4f1dedb08e14ee3e3dbe7eeb858';
-        temp.params.language = 'en-US';
-        return temp;
-    },
-    (error) => {
-        // 요청 에러 처리를 작성합니다.
-        store.dispatch({
-            type: 'SET_IS_LOADING',
-            payload: false,
-        });
-        return Promise.reject(error);
-    },
-);
-
-api.interceptors.response.use(
-    (response) => {
-        /* 200처리 */
-        store.dispatch({
-            type: 'SET_IS_LOADING',
-            payload: false,
-        });
-        return response;
-    },
-
-    (error) => {
-        /* 200 외 처리 */
-        store.dispatch({
-            type: 'SET_IS_LOADING',
-            payload: false,
-        });
-        return Promise.reject(error);
-    },
-);
 
 // api
 

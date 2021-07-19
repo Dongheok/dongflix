@@ -5,13 +5,13 @@ import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { store } from 'redux/redux';
+import store from 'redux/redux';
 
 // css
 import './css/reset.css';
 import './css/global.css';
 
-import App from 'App';
+import App from './app';
 
 ReactDOM.render(
     <Provider store={store}>

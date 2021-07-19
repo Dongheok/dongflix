@@ -1,32 +1,22 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Helmet from 'react-helmet';
-import { Grid } from '@material-ui/core';
-import { movieApi, tvApi } from 'api';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'redux/reducers';
+import { searchContent } from 'redux/actions/content';
 
+import { Grid } from '@material-ui/core';
 import Section from 'components/section';
 import Poster from 'components/poster';
 import PosterWrap from 'components/poster-wrap';
 import Message from 'components/message';
 import Wrapper from './styles';
 
-type DataType = {
-    movieResult: any[] | null;
-    tvResult: any[] | null;
-    searchTerm: string;
-    error: string;
-};
-
 const Search: React.FC = () => {
-    const [data, setData] = useState<DataType>({
-        movieResult: null,
-        tvResult: null,
-        searchTerm: '',
-        error: '',
-    });
+    const dispatch = useDispatch();
+    const { searchContentData } = useSelector((state: RootState) => state.content);
 
     const [currentSearchTerm, setCurrentSearchTerm] = useState<string>('');
-
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const searchFunction = async (term: string) => {
         let searchTerm: string | undefined = '';
         // 새로고침 시, 전에 검색한 기록이 있으면 반영
@@ -34,35 +24,32 @@ const Search: React.FC = () => {
             searchTerm = term;
             // 화면에 표시하는 데이터는 디코딩 문자열
             setCurrentSearchTerm(decodeURIComponent(JSON.parse(searchTerm)));
+            setErrorMessage(decodeURIComponent(JSON.parse(searchTerm)));
         } else {
             // 통신하는 데이터는 인코딩 문자열
             searchTerm = encodeURIComponent(currentSearchTerm);
             // 로컬 저장소에 json형태로 set
             localStorage.setItem('searchTerm', JSON.stringify(searchTerm));
+            setErrorMessage(decodeURIComponent(JSON.parse(JSON.stringify(searchTerm))));
         }
-        try {
-            if (searchTerm !== '') {
-                const movieResults = await movieApi.search(searchTerm);
-                const tvResults = await tvApi.search(searchTerm);
-                setData({
-                    ...data,
-                    movieResult: [...movieResults.data.results],
-                    tvResult: [...tvResults.data.results],
-                    searchTerm,
-                    error: `Nothing found : ${decodeURIComponent(searchTerm)}`,
-                });
-            } else {
-                setData({
-                    movieResult: [],
-                    tvResult: [],
-                    searchTerm: '',
-                    error: '',
-                });
-            }
-        } catch (e) {
-            setData({ ...data, error: "Can't find results." });
-        }
+        dispatch(searchContent(searchTerm));
     };
+
+    const onChangeSearchText = useCallback(
+        (e) => {
+            setCurrentSearchTerm(e.target.value);
+        },
+        [currentSearchTerm],
+    );
+
+    const onSubmitSearchText = useCallback(
+        (e) => {
+            if (e.key === 'Enter') {
+                searchFunction('');
+            }
+        },
+        [currentSearchTerm],
+    );
 
     useEffect(() => {
         const prevSearchTerm = localStorage.getItem('searchTerm');
@@ -79,21 +66,13 @@ const Search: React.FC = () => {
             </Helmet>
             {/*  */}
             <Grid className="search_form">
-                <input
-                    type="text"
-                    value={currentSearchTerm}
-                    placeholder="Search Movies or TV Shows..."
-                    onChange={(e) => {
-                        setCurrentSearchTerm(e.target.value);
-                    }}
-                    onKeyUp={(e) => e.key === 'Enter' && searchFunction('')}
-                />
+                <input type="text" value={currentSearchTerm} placeholder="Search Movies or TV Shows..." onChange={onChangeSearchText} onKeyUp={onSubmitSearchText} />
             </Grid>
             {/*  */}
             <PosterWrap>
-                {data.movieResult && data.movieResult.length > 0 && (
+                {searchContentData.movie && searchContentData.movie.length > 0 && (
                     <Section title="Movie Results">
-                        {data.movieResult.map((x, index) => (
+                        {searchContentData.movie.map((x, index) => (
                             <Grid item className="poster" key={x.id}>
                                 <Poster
                                     id={x.id}
@@ -108,9 +87,9 @@ const Search: React.FC = () => {
                     </Section>
                 )}
                 {/*  */}
-                {data.tvResult && data.tvResult.length > 0 && (
+                {searchContentData.tv && searchContentData.tv.length > 0 && (
                     <Section title="TV Results">
-                        {data.tvResult.map((x, index) => (
+                        {searchContentData.tv.map((x, index) => (
                             <Grid item className="poster" key={x.id}>
                                 <Poster
                                     id={x.id}
@@ -125,7 +104,7 @@ const Search: React.FC = () => {
                     </Section>
                 )}
                 {/*  */}
-                {data.movieResult && data.tvResult && data.movieResult.length === 0 && data.tvResult.length === 0 && data.searchTerm !== '' && <Message text={data.error} />}
+                {searchContentData.movie && searchContentData.tv && searchContentData.movie.length === 0 && searchContentData.tv.length === 0 && <Message text={`Not Found "${errorMessage}"`} />}
                 {/*  */}
             </PosterWrap>
         </Wrapper>

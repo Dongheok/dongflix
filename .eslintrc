@@ -1,9 +1,9 @@
 {
+    "root": true,
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": ["./tsconfig.json"]
     },
-    "root": true,
     "env": {
         "browser": true,
         "node": true,
@@ -34,6 +34,7 @@
         "no-nested-ternary": 0,
         "no-console": "off",
         "import/prefer-default-export": "off",
+        "no-param-reassign": 0,
         "generator-star-spacing": "off",
         "prettier/prettier": ["error"]
     }

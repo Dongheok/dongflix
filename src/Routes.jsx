@@ -1,7 +1,4 @@
-import React from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
-
-// layout
 
 // pages
 import Movie from 'pages/movie';

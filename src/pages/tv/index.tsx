@@ -1,47 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import Helmet from 'react-helmet';
-import { tvApi } from 'api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTvContent } from 'redux/actions/content';
+import { RootState } from 'redux/reducers';
 
 import Section from 'components/section';
 import Poster from 'components/poster';
 import PosterWrap from 'components/poster-wrap';
 import Message from 'components/message';
 
-type DataType = {
-    topRated: any[];
-    popular: any[];
-    airingToday: any[];
-    error: string;
-};
-
 const Tv: React.FC = () => {
-    const [data, setData] = useState<DataType>({
-        topRated: [],
-        popular: [],
-        airingToday: [],
-        error: '',
-    });
-    const TvFunction = async () => {
-        try {
-            const topRated = await tvApi.topRated();
-            const popular = await tvApi.popular();
-            const airingToday = await tvApi.airingToday();
-            setData({
-                ...data,
-                topRated: topRated.data.results,
-                popular: popular.data.results,
-                airingToday: airingToday.data.results,
-            });
-        } catch (e) {
-            console.log({ e });
-            setData({ ...data, error: "Can't find Tvs information." });
-        }
-    };
-
+    const { tvContentData, tvContentError } = useSelector((state: RootState) => state.content);
+    const dispatch = useDispatch();
     useEffect(() => {
-        TvFunction();
+        dispatch(setTvContent());
     }, []);
     return (
         <>
@@ -50,9 +24,9 @@ const Tv: React.FC = () => {
             </Helmet>
             <PosterWrap>
                 {/*  */}
-                {data.topRated && data.topRated.length > 0 && (
+                {tvContentData.topRated && tvContentData.topRated.length > 0 && (
                     <Section title="Top Rated">
-                        {data.topRated.map((x, index) => (
+                        {tvContentData.topRated.map((x, index) => (
                             <Grid item className="poster" key={x.id}>
                                 <Poster id={x.id} title={x.original_name} imageUrl={x.poster_path} rating={x.vote_average} year={x.first_air_date.substring(0, 4)} type="tv" />
                             </Grid>
@@ -60,9 +34,9 @@ const Tv: React.FC = () => {
                     </Section>
                 )}
                 {/*  */}
-                {data.popular && data.popular.length > 0 && (
+                {tvContentData.popular && tvContentData.popular.length > 0 && (
                     <Section title="Popular TV">
-                        {data.popular.map((x, index) => (
+                        {tvContentData.popular.map((x, index) => (
                             <Grid item className="poster" key={x.id}>
                                 <Poster id={x.id} title={x.original_name} imageUrl={x.poster_path} rating={x.vote_average} year={x.first_air_date.substring(0, 4)} type="tv" />
                             </Grid>
@@ -70,9 +44,9 @@ const Tv: React.FC = () => {
                     </Section>
                 )}
                 {/*  */}
-                {data.airingToday && data.airingToday.length > 0 && (
+                {tvContentData.airingToday && tvContentData.airingToday.length > 0 && (
                     <Section title="Airing Today TV">
-                        {data.airingToday.map((x, index) => (
+                        {tvContentData.airingToday.map((x, index) => (
                             <Grid item className="poster" key={x.id}>
                                 <Poster id={x.id} title={x.original_name} imageUrl={x.poster_path} rating={x.vote_average} year={x.first_air_date.substring(0, 4)} type="tv" />
                             </Grid>
@@ -80,7 +54,7 @@ const Tv: React.FC = () => {
                     </Section>
                 )}
                 {/*  */}
-                {data.error && <Message text={data.error} />}
+                {tvContentError && <Message text={tvContentError} />}
             </PosterWrap>
         </>
     );

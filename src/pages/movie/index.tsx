@@ -1,47 +1,21 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
-import { movieApi } from 'api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMovieContent } from 'redux/actions/content';
+import { RootState } from 'redux/reducers';
 
+import { Grid } from '@material-ui/core';
 import Section from 'components/section';
 import Poster from 'components/poster';
 import PosterWrap from 'components/poster-wrap';
 import Message from 'components/message';
 
-type DataType = {
-    nowPlaying: any[];
-    upComing: any[];
-    popular: any[];
-    error: string;
-};
-
 const Movie: React.FC = () => {
-    const [data, setData] = useState<DataType>({
-        nowPlaying: [],
-        upComing: [],
-        popular: [],
-        error: '',
-    });
-    const MovieFunction = async () => {
-        try {
-            const nowPlaying = await movieApi.nowPlaying();
-            const upComing = await movieApi.upComing();
-            const popular = await movieApi.popular();
-            setData({
-                ...data,
-                nowPlaying: nowPlaying.data.results,
-                upComing: upComing.data.results,
-                popular: popular.data.results,
-            });
-        } catch (e) {
-            console.log({ e });
-            setData({ ...data, error: "Can't find Tvs information." });
-        }
-    };
+    const dispatch = useDispatch();
+    const { movieContentData, movieContentError } = useSelector((state: RootState) => state.content);
 
     useEffect(() => {
-        MovieFunction();
+        dispatch(setMovieContent());
     }, []);
     return (
         <>
@@ -49,10 +23,9 @@ const Movie: React.FC = () => {
                 <title>Movies | Dongflix</title>
             </Helmet>
             <PosterWrap>
-                {/*  */}
-                {data.nowPlaying && data.nowPlaying.length > 0 && (
+                {movieContentData.nowPlaying && movieContentData.nowPlaying.length > 0 && (
                     <Section title="Now Playing">
-                        {data.nowPlaying.map((x, index) => (
+                        {movieContentData.nowPlaying.map((x, index) => (
                             <Grid item className="poster" key={x.id}>
                                 <Poster type="movie" rating={x.vote_average} id={x.id} imageUrl={x.poster_path} title={x.original_title} year={x.release_date.substring(0, 4)} />
                             </Grid>
@@ -60,9 +33,9 @@ const Movie: React.FC = () => {
                     </Section>
                 )}
                 {/*  */}
-                {data.upComing && data.upComing.length > 0 && (
+                {movieContentData.upComing && movieContentData.upComing.length > 0 && (
                     <Section title="UpComing Movies">
-                        {data.upComing.map((x, index) => (
+                        {movieContentData.upComing.map((x, index) => (
                             <Grid item className="poster" key={x.id}>
                                 <Poster type="movie" rating={x.vote_average} id={x.id} imageUrl={x.poster_path} title={x.original_title} year={x.release_date.substring(0, 4)} />
                             </Grid>
@@ -70,9 +43,9 @@ const Movie: React.FC = () => {
                     </Section>
                 )}
                 {/*  */}
-                {data.popular && data.popular.length > 0 && (
+                {movieContentData.popular && movieContentData.popular.length > 0 && (
                     <Section title="Popular Movies">
-                        {data.popular.map((x, index) => (
+                        {movieContentData.popular.map((x, index) => (
                             <Grid item className="poster" key={x.id}>
                                 <Poster type="movie" rating={x.vote_average} id={x.id} imageUrl={x.poster_path} title={x.original_title} year={x && x.release_date && x.release_date.substring(0, 4)} />
                             </Grid>
@@ -80,7 +53,7 @@ const Movie: React.FC = () => {
                     </Section>
                 )}
                 {/*  */}
-                {data.error && <Message text={data.error} />}
+                {movieContentError && <Message text={movieContentError} />}
             </PosterWrap>
         </>
     );
