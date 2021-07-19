@@ -44,6 +44,6 @@ React, Typescript, Redux-Saga를 이용하여 최신, 인기, 공개 예정인 �
 ![7](https://user-images.githubusercontent.com/60591071/113411610-32959f80-93f1-11eb-91be-ab1dc03da6eb.png)
 
 -   영화에 애니메이션을 검색할 수 있는 페이지입니다. 사용자가 검색어를 입력하고 검색하면 해당 검색어를 포함한 영화와 애니메이션을 보여줍니다.
--   사용자가 새로고침을 하거나 다른 화면을 갔다와도 localStorage에 기록이 남아있어 전에 검색한 내용을 그대로 보여줍니다.
+-   검색 후 새로고침을 하거나 뒤로가기를 했을 때, 원래 상태 값을 localStorage에 저장하여 기존 상태 값을 유지하게 구현하였습니다.
 
 ![8](https://user-images.githubusercontent.com/60591071/113411611-32959f80-93f1-11eb-8f42-ddd98f940f50.png)
