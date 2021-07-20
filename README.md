@@ -7,6 +7,13 @@ React, Typescript, Redux-Saga를 이용하여 최신, 인기, 공개 예정인 �
 
 사용언어 : React, Typescript, Redux, Redux-Saga, Styled Components, Material UI
 
+## root
+
+```
+npm install
+npm run dev
+```
+
 ## ✔ 주요 기능
 
 링크 : https://dev-donghyuk.github.io/dongflix
